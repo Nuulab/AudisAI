@@ -1,0 +1,77 @@
+name: "Tennessee ELVIS Act (Ensuring Likeness Voice and Image Security)"
+id: "TN-ELVIS-2024"
+description: "Protects musicians and individuals from unauthorized AI voice cloning and likeness theft"
+rules:
+  # 1. Voice Cloning Libraries
+  - id: "TN-VOICE-01"
+    severity: "CRITICAL"
+    description: "Detects libraries capable of unauthorized voice cloning."
+    scanner_type: "regex"
+    patterns:
+      - "tortoise-tts"
+      - "tortoise_tts"
+      - "elevenlabs"
+      - "eleven_labs"
+      - "coqui-ai"
+      - "coqui_ai"
+      - "TTS.api"
+      - "rvc-project"
+      - "rvc_project"
+      - "so-vits-svc"
+      - "sovits"
+      - "voice_clone"
+      - "clone_voice"
+      - "voice_conversion"
+      - "bark.generate"
+      - "MockingBird"
+      - "Real-Time-Voice-Cloning"
+    remediation: "Using voice cloning libraries without consent is a Class A Misdemeanor in Tennessee under the ELVIS Act. Ensure you have explicit written consent from the voice owner."
+
+  # 2. Deepfake/Image Generation
+  - id: "TN-IMAGE-01"
+    severity: "HIGH"
+    description: "Detects libraries for generating synthetic likenesses."
+    scanner_type: "regex"
+    patterns:
+      - "deepfake"
+      - "face_swap"
+      - "faceswap"
+      - "DeepFaceLab"
+      - "first_order_model"
+      - "face2face"
+      - "wav2lip"
+      - "lipsync"
+      - "synthetic_media"
+    remediation: "The Tennessee ELVIS Act protects individuals' likeness. Using deepfake technology without consent may violate state law."
+
+  # 3. Celebrity/Artist Name Detection
+  - id: "TN-CELEB-01"
+    severity: "MEDIUM"
+    description: "Detects potential unauthorized use of celebrity voices/likenesses."
+    scanner_type: "context_aware"
+    anchors: ["celebrity_voice", "artist_voice", "singer_voice", "famous_person", "impersonate"]
+    exceptions: ["parody", "satire", "licensed", "authorized", "consent_form"]
+    reinforcers: ["generate", "clone", "synthesize", "create", "produce"]
+    remediation: "The ELVIS Act protects artists' voices and likenesses. Ensure you have proper licensing or consent before generating synthetic celebrity content."
+
+  # 4. Music Generation from Artist Styles
+  - id: "TN-MUSIC-01"
+    severity: "HIGH"
+    description: "Detects AI music generation that may mimic specific artists."
+    scanner_type: "context_aware"
+    anchors: ["artist_style", "singer_style", "musician_style", "sound_like", "voice_of"]
+    exceptions: ["original", "generic", "synthetic_voice", "licensed"]
+    reinforcers: ["generate", "create", "produce", "model", "train"]
+    remediation: "Generating music in a specific artist's style may violate the ELVIS Act. Use licensed or original synthetic voices."
+
+  # 5. Consent Documentation Check
+  - id: "TN-CONSENT-01"
+    severity: "MEDIUM"
+    description: "Checks for voice/likeness consent documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "VOICE_CONSENT.md"
+      - "LIKENESS_CONSENT.pdf"
+      - "ARTIST_LICENSE.md"
+      - "VOICE_LICENSE.pdf"
+    remediation: "If using voice cloning or likeness technology, maintain consent documentation. Create VOICE_CONSENT.md with proof of authorization."

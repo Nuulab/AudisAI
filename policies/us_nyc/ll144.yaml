@@ -1,0 +1,34 @@
+name: "NYC Automated Employment Decision Tools (Local Law 144)"
+id: "NYC-LL144-2023"
+description: "Requires bias audits for AEDTs used in hiring/promotion decisions"
+rules:
+  # 1. Bias Audit Documentation
+  - id: "NYC-AUDIT-01"
+    severity: "CRITICAL"
+    description: "Checks for required Bias Audit documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "BIAS_AUDIT.pdf"
+      - "BIAS_AUDIT_REPORT.md"
+      - "AEDT_AUDIT.json"
+    remediation: "NYC Local Law 144 requires an annual independent bias audit for any Automated Employment Decision Tool. Add your audit report to the repository."
+
+  # 2. Candidate Ranking/Scoring
+  - id: "NYC-AEDT-01"
+    severity: "HIGH"
+    description: "Detects candidate ranking or scoring algorithms."
+    scanner_type: "context_aware"
+    anchors: ["rank_candidate", "score_applicant", "fit_score", "match_score", "hiring_score"]
+    exceptions: ["test", "demo"]
+    reinforcers: ["algorithm", "model", "predict", "calculate"]
+    remediation: "This logic appears to be an AEDT under NYC LL 144. It cannot be used without a published bias audit and candidate notice."
+
+  # 3. Notice Period Logic
+  - id: "NYC-NOTICE-01"
+    severity: "MEDIUM"
+    description: "Detects mechanisms for providing 10-day notice to candidates."
+    scanner_type: "context_aware"
+    anchors: ["send_notice", "candidate_notification", "10_day_notice", "LL144_notice"]
+    exceptions: ["internal", "admin"]
+    reinforcers: ["email", "alert", "message"]
+    remediation: "NYC LL 144 requires notifying candidates 10 business days before using an AEDT. Ensure this notice is implemented."

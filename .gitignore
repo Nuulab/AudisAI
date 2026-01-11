@@ -1,0 +1,28 @@
+# Binaries
+audisai
+*.exe
+
+# Reports (generated)
+*.pdf
+*.sarif
+report.json
+AudisAI_Report_*.md
+
+# Dependencies
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config (user-specific)
+~/.audisai/
+
+# Test artifacts
+test_output/

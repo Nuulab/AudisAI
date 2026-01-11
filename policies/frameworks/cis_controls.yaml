@@ -1,0 +1,99 @@
+name: "CIS Critical Security Controls v8"
+id: "CIS-CONTROLS-V8"
+description: "Prioritized set of actions to protect organizations from known cyber attack vectors"
+rules:
+  # Control 1 - Inventory of Enterprise Assets
+  - id: "CIS-01"
+    severity: "HIGH"
+    description: "Checks for asset inventory documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "ASSET_INVENTORY.md"
+      - "HARDWARE_INVENTORY.md"
+      - "SOFTWARE_INVENTORY.md"
+    remediation: "[CIS Control 1] Maintain an accurate inventory of all enterprise assets. Create ASSET_INVENTORY.md."
+
+  # Control 2 - Inventory of Software Assets
+  - id: "CIS-02"
+    severity: "MEDIUM"
+    description: "Checks for software bill of materials."
+    scanner_type: "file_existence"
+    patterns:
+      - "SBOM.json"
+      - "SBOM.xml"
+      - "SOFTWARE_BOM.md"
+      - "go.sum"
+      - "package-lock.json"
+      - "requirements.txt"
+    remediation: "[CIS Control 2] Maintain a Software Bill of Materials (SBOM). Dependency lock files help track software inventory."
+
+  # Control 3 - Data Protection
+  - id: "CIS-03"
+    severity: "CRITICAL"
+    description: "Detects unencrypted sensitive data handling."
+    scanner_type: "context_aware"
+    anchors: ["password", "ssn", "credit_card", "secret"]
+    exceptions: ["encrypt", "hash", "bcrypt", "argon2"]
+    reinforcers: ["store", "save", "write", "database"]
+    remediation: "[CIS Control 3] Encrypt sensitive data at rest to protect against unauthorized access."
+
+  # Control 4 - Secure Configuration
+  - id: "CIS-04"
+    severity: "HIGH"
+    description: "Detects default or weak configurations."
+    scanner_type: "context_aware"
+    anchors: ["default", "admin:admin", "root:root", "password123"]
+    exceptions: ["test", "example", "placeholder"]
+    reinforcers: ["config", "credential", "login"]
+    remediation: "[CIS Control 4] Establish secure configurations. Never use default credentials in production."
+
+  # Control 5 - Account Management
+  - id: "CIS-05"
+    severity: "HIGH"
+    description: "Checks for account lifecycle management."
+    scanner_type: "context_aware"
+    anchors: ["create_user", "delete_user", "disable_account", "user_lifecycle"]
+    exceptions: []
+    reinforcers: ["admin", "manage", "provision"]
+    remediation: "[CIS Control 5] Implement account lifecycle management including provisioning, review, and deprovisioning."
+
+  # Control 6 - Access Control Management
+  - id: "CIS-06"
+    severity: "HIGH"
+    description: "Checks for role-based access control."
+    scanner_type: "context_aware"
+    anchors: ["rbac", "role", "permission", "acl"]
+    exceptions: []
+    reinforcers: ["check", "verify", "enforce"]
+    remediation: "[CIS Control 6] Implement role-based access control (RBAC) based on least privilege principle."
+
+  # Control 7 - Continuous Vulnerability Management
+  - id: "CIS-07"
+    severity: "HIGH"
+    description: "Checks for dependency vulnerability scanning."
+    scanner_type: "file_existence"
+    patterns:
+      - ".github/dependabot.yml"
+      - ".snyk"
+      - "SECURITY.md"
+    remediation: "[CIS Control 7] Enable automated dependency vulnerability scanning (Dependabot, Snyk). Create SECURITY.md."
+
+  # Control 8 - Audit Log Management
+  - id: "CIS-08"
+    severity: "HIGH"
+    description: "Checks for audit logging configuration."
+    scanner_type: "context_aware"
+    anchors: ["audit_log", "security_log", "access_log"]
+    exceptions: []
+    reinforcers: ["enable", "config", "write"]
+    remediation: "[CIS Control 8] Enable and centralize audit logging. Retain logs according to compliance requirements."
+
+  # Control 16 - Application Software Security
+  - id: "CIS-16"
+    severity: "CRITICAL"
+    description: "Detects SQL injection vulnerabilities."
+    scanner_type: "context_aware"
+    anchors: ["SELECT", "INSERT", "UPDATE", "DELETE"]
+    exceptions: ["parameterized", "prepared", "sanitize"]
+    reinforcers: ["+ user", "+ input", "+ request", "format", "f-string"]
+    remediation: "[CIS Control 16] Use parameterized queries to prevent SQL injection. Never concatenate user input into SQL."

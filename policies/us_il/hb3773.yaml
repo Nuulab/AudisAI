@@ -1,0 +1,33 @@
+name: "Illinois AI in Employment (HB 3773)"
+id: "IL-HB3773-2026"
+description: "Prohibits AI discrimination in employment and use of zip codes as proxy for protected classes"
+rules:
+  # 1. Zip Code as Proxy (Sec. 2-101)
+  - id: "IL-ZIP-01"
+    severity: "CRITICAL"
+    description: "Detects use of zip codes in employment decisions (prohibited proxy)."
+    scanner_type: "context_aware"
+    anchors: ["zip_code", "postal_code", "zipcode", "address_zip"]
+    exceptions: ["shipping", "mailing", "billing", "contact_info"]
+    reinforcers: ["hire", "recruit", "screen", "rank", "score", "reject", "candidate"]
+    remediation: "Illinois HB 3773 prohibits using zip codes as a proxy for protected classes in employment decisions. Remove zip code features from hiring models."
+
+  # 2. Recruitment Screening
+  - id: "IL-HIRE-01"
+    severity: "HIGH"
+    description: "Detects AI-driven recruitment screening logic."
+    scanner_type: "context_aware"
+    anchors: ["screen_candidate", "filter_resume", "rank_applicant", "score_candidate", "automated_interview"]
+    exceptions: ["human_review", "manual_screen"]
+    reinforcers: ["ai", "ml", "model", "algorithm", "prediction"]
+    remediation: "Illinois HB 3773 requires that AI used for recruitment does not discriminate. Ensure your screening algorithms are audited for bias."
+
+  # 3. Notification Logic
+  - id: "IL-NOTIFY-01"
+    severity: "MEDIUM"
+    description: "Checks for logic to notify employees of AI use."
+    scanner_type: "context_aware"
+    anchors: ["notify_employee", "inform_candidate", "disclosure_notice"]
+    exceptions: ["log", "debug"]
+    reinforcers: ["ai_use", "automated_decision"]
+    remediation: "You must notify employees when AI is used for employment decisions. Implement notification logic."

@@ -1,0 +1,35 @@
+name: "Texas Responsible AI Governance Act (HB 149)"
+id: "TX-HB149-2026"
+rules:
+  # 1. Biometric Data Protection (Sec 552.054)
+  - id: "TX-BIO-01"
+    severity: "CRITICAL"
+    description: "Detects usage of known biometric capture libraries without context."
+    scanner_type: "regex"
+    patterns:
+      - "face_recognition"
+      - "dlib.get_frontal_face_detector"
+      - "RetinaScan"
+      - "VoicePrint"
+      - "pytorchaudio"
+    remediation: "Section 552.054 prohibits capturing biometric data (face/voice) from public sources without consent. Ensure you have explicit opt-in."
+
+  # 2. Manipulation of Human Behavior (Sec 552.052)
+  - id: "TX-MANIP-01"
+    severity: "HIGH"
+    description: "Detects language indicating intent to incite harm or violence."
+    scanner_type: "context_aware"
+    anchors: ["kill", "suicide", "harm", "attack", "damage"]
+    exceptions: ["process", "thread", "daemon", "server", "latency", "bug", "connection"]
+    reinforcers: ["user", "person", "myself", "human", "child"]
+    remediation: "Section 552.052 prohibits AI designed to incite self-harm or violence. Review this prompt logic."
+
+  # 3. Discrimination / Protected Classes (Sec 552.056)
+  - id: "TX-DISC-01"
+    severity: "HIGH"
+    description: "Detects use of protected class variables in logic flow."
+    scanner_type: "context_aware"
+    anchors: ["race", "gender", "ethnicity", "religion", "sexual_orientation"]
+    exceptions: ["survey", "demographics_form", "analytics_logging"]
+    reinforcers: ["score", "rank", "hire", "deny", "approve", "sort"]
+    remediation: "Section 552.056 prohibits intentional discrimination. Ensure these variables are not used for scoring or decision-making logic."

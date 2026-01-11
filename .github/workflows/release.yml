@@ -1,0 +1,56 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Build binaries
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          COMMIT=$(git rev-parse --short HEAD)
+          DATE=$(date -u +%Y-%m-%d)
+          LDFLAGS="-X 'github.com/nuulab/audisai/cmd.Version=${VERSION}' -X 'github.com/nuulab/audisai/cmd.Commit=${COMMIT}' -X 'github.com/nuulab/audisai/cmd.Date=${DATE}'"
+          
+          # Linux
+          GOOS=linux GOARCH=amd64 go build -ldflags "$LDFLAGS" -o audisai-linux-amd64 main.go
+          GOOS=linux GOARCH=arm64 go build -ldflags "$LDFLAGS" -o audisai-linux-arm64 main.go
+          
+          # macOS
+          GOOS=darwin GOARCH=amd64 go build -ldflags "$LDFLAGS" -o audisai-darwin-amd64 main.go
+          GOOS=darwin GOARCH=arm64 go build -ldflags "$LDFLAGS" -o audisai-darwin-arm64 main.go
+          
+          # Windows
+          GOOS=windows GOARCH=amd64 go build -ldflags "$LDFLAGS" -o audisai-windows-amd64.exe main.go
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            audisai-linux-amd64
+            audisai-linux-arm64
+            audisai-darwin-amd64
+            audisai-darwin-arm64
+            audisai-windows-amd64.exe
+          generate_release_notes: true

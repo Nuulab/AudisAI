@@ -1,0 +1,99 @@
+name: "NIST AI Risk Management Framework (AI RMF 1.0)"
+id: "NIST-AIRMF-2023"
+description: "Voluntary framework for managing AI risks across Govern, Map, Measure, Manage functions"
+rules:
+  # ============ GOVERN ============
+  - id: "AIRMF-GOV-01"
+    severity: "HIGH"
+    description: "Checks for AI governance documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "AI_GOVERNANCE_POLICY.md"
+      - "AI_ETHICS_POLICY.md"
+      - "AI_RISK_POLICY.md"
+    remediation: "[NIST AI RMF - Govern] Establish accountability structures. Create AI_GOVERNANCE_POLICY.md documenting roles, responsibilities, and ethical guidelines for AI development."
+
+  - id: "AIRMF-GOV-02"
+    severity: "MEDIUM"
+    description: "Detects hardcoded model versions without governance."
+    scanner_type: "context_aware"
+    anchors: ["model_version", "model_id", "checkpoint", "weights_path"]
+    exceptions: ["test", "fixture"]
+    reinforcers: ["hardcoded", "static", "fixed"]
+    remediation: "[NIST AI RMF - Govern] Implement model versioning governance. Use a model registry with version tracking rather than hardcoded paths."
+
+  # ============ MAP ============
+  - id: "AIRMF-MAP-01"
+    severity: "HIGH"
+    description: "Checks for AI Impact Assessment documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "AI_IMPACT_ASSESSMENT.md"
+      - "IMPACT_ASSESSMENT.pdf"
+      - "ALGORITHMIC_IMPACT.md"
+    remediation: "[NIST AI RMF - Map] Conduct and document an AI Impact Assessment identifying stakeholders, intended uses, and potential harms."
+
+  - id: "AIRMF-MAP-02"
+    severity: "MEDIUM"
+    description: "Detects deployment without stakeholder mapping."
+    scanner_type: "context_aware"
+    anchors: ["deploy", "production", "release", "launch"]
+    exceptions: ["test_deploy", "staging"]
+    reinforcers: ["model", "ai", "ml", "predict"]
+    remediation: "[NIST AI RMF - Map] Before deployment, identify all stakeholders (users, affected individuals, operators) and document in your Impact Assessment."
+
+  # ============ MEASURE ============
+  - id: "AIRMF-MEAS-01"
+    severity: "HIGH"
+    description: "Detects model evaluation without fairness metrics."
+    scanner_type: "context_aware"
+    anchors: ["evaluate", "metrics", "accuracy", "precision", "recall", "f1_score"]
+    exceptions: ["fairness", "bias_check", "demographic_parity", "equalized_odds"]
+    reinforcers: ["model", "classifier", "prediction"]
+    remediation: "[NIST AI RMF - Measure] Include fairness metrics (demographic parity, equalized odds) alongside performance metrics. Measure impact across protected groups."
+
+  - id: "AIRMF-MEAS-02"
+    severity: "MEDIUM"
+    description: "Checks for explainability/interpretability logic."
+    scanner_type: "context_aware"
+    anchors: ["shap", "lime", "feature_importance", "explain", "interpret"]
+    exceptions: []
+    reinforcers: ["model", "prediction", "decision"]
+    remediation: "[NIST AI RMF - Measure] Implement explainability mechanisms (SHAP, LIME) to understand model decisions. This supports transparency requirements."
+
+  - id: "AIRMF-MEAS-03"
+    severity: "HIGH"
+    description: "Checks for model monitoring/drift detection."
+    scanner_type: "context_aware"
+    anchors: ["drift", "monitor", "data_drift", "concept_drift", "model_decay"]
+    exceptions: []
+    reinforcers: ["detect", "alert", "threshold"]
+    remediation: "[NIST AI RMF - Measure] Implement continuous monitoring for data drift and model performance degradation."
+
+  # ============ MANAGE ============
+  - id: "AIRMF-MAN-01"
+    severity: "CRITICAL"
+    description: "Checks for AI incident response plan."
+    scanner_type: "file_existence"
+    patterns:
+      - "AI_INCIDENT_RESPONSE.md"
+      - "INCIDENT_RESPONSE_PLAN.md"
+    remediation: "[NIST AI RMF - Manage] Create an AI-specific incident response plan documenting how to respond to AI failures, bias incidents, or security breaches."
+
+  - id: "AIRMF-MAN-02"
+    severity: "HIGH"
+    description: "Detects model updates without change management."
+    scanner_type: "context_aware"
+    anchors: ["retrain", "update_model", "fine_tune", "new_weights"]
+    exceptions: ["changelog", "version_bump", "migration"]
+    reinforcers: ["production", "deploy"]
+    remediation: "[NIST AI RMF - Manage] Establish formal change management for model updates. Document changes, test thoroughly, and maintain rollback capability."
+
+  - id: "AIRMF-MAN-03"
+    severity: "MEDIUM"
+    description: "Detects third-party AI/ML dependencies."
+    scanner_type: "context_aware"
+    anchors: ["openai", "anthropic", "huggingface", "replicate", "azure_ml", "vertex_ai"]
+    exceptions: []
+    reinforcers: ["api", "client", "inference"]
+    remediation: "[NIST AI RMF - Manage] Document third-party AI dependencies and assess their risk. Include vendor assessment in your risk management process."

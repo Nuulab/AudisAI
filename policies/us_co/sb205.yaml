@@ -1,0 +1,45 @@
+name: "Colorado AI Consumer Protection Act (SB 205)"
+id: "CO-SB205-2026"
+description: "Requires 'reasonable care' to prevent algorithmic discrimination in high-risk AI systems (Housing, Employment, Finance)"
+rules:
+  # 1. Discrimination Logic Detection (Sec. 6-1-1703)
+  - id: "CO-DISC-01"
+    severity: "CRITICAL"
+    description: "Detects logic that uses protected classes in decision trees."
+    scanner_type: "context_aware"
+    anchors: ["race", "ethnicity", "religion", "disability", "sexual_orientation", "gender", "national_origin", "age"]
+    exceptions: ["survey", "demographics_form", "analytics_logging", "diversity_report", "census"]
+    reinforcers: ["score", "credit", "hire", "deny", "approve", "rate", "rank", "reject", "accept", "loan", "mortgage"]
+    remediation: "Colorado SB 205 (Sec. 6-1-1703) prohibits using protected class variables for consequential decisions. Remove them from scoring/decision logic."
+
+  # 2. Risk Assessment Documentation
+  - id: "CO-RISK-01"
+    severity: "MEDIUM"
+    description: "Checks for required Impact Assessment documentation."
+    scanner_type: "file_existence"
+    patterns: 
+      - "AI_RISK_ASSESSMENT.md"
+      - "AI_IMPACT_ASSESSMENT.md"
+      - "DATA_PROTECTION_IMPACT.pdf"
+      - "ALGORITHMIC_IMPACT_ASSESSMENT.md"
+    remediation: "Colorado SB 205 requires maintaining a Risk/Impact Assessment document to claim 'Rebuttable Presumption' of compliance. Create AI_RISK_ASSESSMENT.md in your repository."
+
+  # 3. High-Risk System Indicators
+  - id: "CO-RISK-02"
+    severity: "HIGH"
+    description: "Detects high-risk AI system patterns (credit scoring, hiring, housing)."
+    scanner_type: "context_aware"
+    anchors: ["credit_score", "fico", "lending_decision", "loan_approval", "housing_application", "tenant_screening", "employment_decision"]
+    exceptions: ["test", "mock", "example", "demo", "sample"]
+    reinforcers: ["predict", "model", "algorithm", "automate", "decision", "system"]
+    remediation: "This appears to be a high-risk AI system under Colorado SB 205. Ensure you have documented impact assessments and human oversight mechanisms."
+
+  # 4. Automated Decision Making
+  - id: "CO-AUTO-01"
+    severity: "HIGH"
+    description: "Detects fully automated consequential decisions without human review."
+    scanner_type: "context_aware"
+    anchors: ["auto_approve", "auto_deny", "auto_reject", "automated_decision", "no_human_review"]
+    exceptions: ["manual_override", "human_review", "appeal_process"]
+    reinforcers: ["final", "binding", "immediate", "instant"]
+    remediation: "Colorado SB 205 requires human oversight for consequential AI decisions. Implement a human review or appeal mechanism."

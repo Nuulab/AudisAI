@@ -1,0 +1,52 @@
+name: "Utah AI Policy Act (SB 149)"
+id: "UT-SB149-2024"
+description: "Disclosure law requiring AI systems to identify themselves when asked, plus AI healthcare regulations"
+rules:
+  # 1. AI Disclosure Check - Positive Pattern
+  - id: "UT-DISC-01"
+    severity: "LOW"
+    description: "Verifies chat interfaces have disclosure mechanisms (positive indicator)."
+    scanner_type: "regex"
+    patterns:
+      - "I am an AI"
+      - "I'm an AI"
+      - "virtual assistant"
+      - "automated system"
+      - "AI assistant"
+      - "chatbot"
+      - "language model"
+      - "artificial intelligence"
+    remediation: "Good! Your system appears to have AI disclosure. Ensure your bot answers 'Yes' when asked 'Are you an AI?' per Utah SB 149."
+
+  # 2. Chatbot Detection Without Disclosure
+  - id: "UT-DISC-02"
+    severity: "HIGH"
+    description: "Detects chatbot/conversational AI without clear disclosure patterns."
+    scanner_type: "context_aware"
+    anchors: ["chatbot", "conversational_ai", "dialog_system", "chat_completion", "message_handler"]
+    exceptions: ["disclosure", "identify_as_ai", "bot_disclaimer", "ai_notice"]
+    reinforcers: ["user_message", "respond", "reply", "conversation", "chat"]
+    remediation: "Utah SB 149 requires AI systems to disclose their nature when asked. Add a disclosure mechanism to your chatbot."
+
+  # 3. Healthcare AI Regulations
+  - id: "UT-HEALTH-01"
+    severity: "CRITICAL"
+    description: "Detects AI in healthcare contexts requiring special disclosure."
+    scanner_type: "context_aware"
+    anchors: ["diagnosis", "treatment_recommendation", "medical_advice", "health_prediction", "patient_data"]
+    exceptions: ["human_physician", "doctor_review", "clinical_oversight", "fda_approved"]
+    reinforcers: ["ai_model", "predict", "recommend", "automate", "algorithm"]
+    remediation: "Utah SB 149 has specific requirements for AI in healthcare. Ensure human physician oversight and clear AI disclosure to patients."
+
+  # 4. Deceptive AI Practices
+  - id: "UT-DECEP-01"
+    severity: "CRITICAL"
+    description: "Detects patterns that may deceive users about AI nature."
+    scanner_type: "regex"
+    patterns:
+      - "pretend_human"
+      - "act_as_human"
+      - "hide_ai_nature"
+      - "disguise_as_human"
+      - "impersonate_human"
+    remediation: "Utah SB 149 prohibits AI systems from deceiving users about their nature. Remove any code that hides AI identity."

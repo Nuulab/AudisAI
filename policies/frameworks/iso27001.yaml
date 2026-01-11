@@ -1,0 +1,71 @@
+name: "ISO/IEC 27001:2022 Information Security"
+id: "ISO-27001-2022"
+description: "International standard for information security management systems (ISMS)"
+rules:
+  # A.5 - Organizational Controls
+  - id: "ISO-A5-01"
+    severity: "HIGH"
+    description: "Checks for information security policy documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "SECURITY_POLICY.md"
+      - "INFORMATION_SECURITY_POLICY.md"
+      - "ISMS_POLICY.md"
+    remediation: "[ISO 27001 - A.5] Establish and document an information security policy approved by management."
+
+  # A.6 - People Controls
+  - id: "ISO-A6-01"
+    severity: "MEDIUM"
+    description: "Detects access without role verification."
+    scanner_type: "context_aware"
+    anchors: ["admin", "superuser", "root", "elevated"]
+    exceptions: ["role_check", "permission_check", "authorize"]
+    reinforcers: ["access", "grant", "allow"]
+    remediation: "[ISO 27001 - A.6] Implement role-based access control. Verify user roles before granting elevated privileges."
+
+  # A.7 - Physical Controls (limited code detection)
+  - id: "ISO-A7-01"
+    severity: "LOW"
+    description: "Detects references to physical security zones."
+    scanner_type: "context_aware"
+    anchors: ["physical_access", "badge", "keycard", "zone"]
+    exceptions: []
+    reinforcers: ["security", "control"]
+    remediation: "[ISO 27001 - A.7] Ensure physical security controls are documented separately from code."
+
+  # A.8 - Technological Controls
+  - id: "ISO-A8-01"
+    severity: "CRITICAL"
+    description: "Detects unencrypted data transmission."
+    scanner_type: "context_aware"
+    anchors: ["http://", "ftp://", "telnet"]
+    exceptions: ["localhost", "127.0.0.1", "test"]
+    reinforcers: ["url", "endpoint", "api"]
+    remediation: "[ISO 27001 - A.8.24] Use encrypted protocols (HTTPS, SFTP, SSH) for data transmission. Never use unencrypted protocols in production."
+
+  - id: "ISO-A8-02"
+    severity: "HIGH"
+    description: "Checks for access control implementation."
+    scanner_type: "context_aware"
+    anchors: ["authenticate", "authorize", "permission", "acl"]
+    exceptions: []
+    reinforcers: ["user", "request", "api"]
+    remediation: "[ISO 27001 - A.8.3] Implement access control based on business and security requirements."
+
+  - id: "ISO-A8-03"
+    severity: "HIGH"
+    description: "Checks for secure coding practices."
+    scanner_type: "context_aware"
+    anchors: ["eval(", "exec(", "system(", "shell_exec"]
+    exceptions: ["sandbox", "safe_eval"]
+    reinforcers: ["input", "user", "request"]
+    remediation: "[ISO 27001 - A.8.28] Avoid dangerous functions that execute arbitrary code. Validate and sanitize all inputs."
+
+  - id: "ISO-A8-04"
+    severity: "HIGH"
+    description: "Checks for vulnerability management."
+    scanner_type: "file_existence"
+    patterns:
+      - "VULNERABILITY_MANAGEMENT.md"
+      - "SECURITY_ASSESSMENT.md"
+    remediation: "[ISO 27001 - A.8.8] Document your vulnerability management process including scanning schedules and remediation SLAs."

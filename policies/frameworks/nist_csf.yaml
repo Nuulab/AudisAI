@@ -1,0 +1,83 @@
+name: "NIST Cybersecurity Framework (CSF 2.0)"
+id: "NIST-CSF-2024"
+description: "Framework for managing cybersecurity risk: Identify, Protect, Detect, Respond, Recover, Govern"
+rules:
+  # ============ IDENTIFY ============
+  - id: "CSF-ID-01"
+    severity: "HIGH"
+    description: "Checks for asset inventory documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "ASSET_INVENTORY.md"
+      - "SYSTEM_INVENTORY.md"
+      - "DATA_CATALOG.md"
+    remediation: "[NIST CSF - Identify] Maintain an inventory of all systems, data assets, and AI models. Create ASSET_INVENTORY.md."
+
+  - id: "CSF-ID-02"
+    severity: "MEDIUM"
+    description: "Detects sensitive data handling without classification."
+    scanner_type: "context_aware"
+    anchors: ["pii", "ssn", "credit_card", "phi", "personal_data"]
+    exceptions: ["data_class", "sensitivity_level", "classification"]
+    reinforcers: ["store", "process", "handle"]
+    remediation: "[NIST CSF - Identify] Classify sensitive data by type and sensitivity level. Implement data classification labels."
+
+  # ============ PROTECT ============
+  - id: "CSF-PR-01"
+    severity: "CRITICAL"
+    description: "Detects hardcoded secrets or credentials."
+    scanner_type: "regex"
+    patterns:
+      - "password\\s*=\\s*['\"][^'\"]+['\"]"
+      - "api_key\\s*=\\s*['\"][^'\"]+['\"]"
+      - "secret\\s*=\\s*['\"][^'\"]+['\"]"
+      - "AWS_SECRET"
+    remediation: "[NIST CSF - Protect] Never hardcode secrets. Use environment variables or a secrets manager (Vault, AWS Secrets Manager)."
+
+  - id: "CSF-PR-02"
+    severity: "HIGH"
+    description: "Checks for encryption at rest configuration."
+    scanner_type: "context_aware"
+    anchors: ["encrypt", "aes", "kms", "encryption_key"]
+    exceptions: []
+    reinforcers: ["data", "storage", "database", "file"]
+    remediation: "[NIST CSF - Protect] Implement encryption at rest for sensitive data. Use AES-256 or cloud KMS."
+
+  # ============ DETECT ============
+  - id: "CSF-DE-01"
+    severity: "HIGH"
+    description: "Checks for logging and monitoring configuration."
+    scanner_type: "context_aware"
+    anchors: ["logger", "logging", "audit_log", "security_log"]
+    exceptions: []
+    reinforcers: ["config", "setup", "init"]
+    remediation: "[NIST CSF - Detect] Implement comprehensive logging for security events. Configure audit logs for access and changes."
+
+  - id: "CSF-DE-02"
+    severity: "MEDIUM"
+    description: "Checks for anomaly detection mechanisms."
+    scanner_type: "context_aware"
+    anchors: ["anomaly", "outlier", "suspicious", "threat_detect"]
+    exceptions: []
+    reinforcers: ["alert", "notify", "flag"]
+    remediation: "[NIST CSF - Detect] Implement anomaly detection for unusual access patterns or behavior."
+
+  # ============ RESPOND ============
+  - id: "CSF-RS-01"
+    severity: "HIGH"
+    description: "Checks for incident response plan."
+    scanner_type: "file_existence"
+    patterns:
+      - "INCIDENT_RESPONSE.md"
+      - "SECURITY_INCIDENT_PLAN.md"
+    remediation: "[NIST CSF - Respond] Create an incident response plan with clear escalation procedures. Document in INCIDENT_RESPONSE.md."
+
+  # ============ RECOVER ============
+  - id: "CSF-RC-01"
+    severity: "HIGH"
+    description: "Checks for backup and recovery configuration."
+    scanner_type: "context_aware"
+    anchors: ["backup", "restore", "disaster_recovery", "failover"]
+    exceptions: []
+    reinforcers: ["config", "schedule", "policy"]
+    remediation: "[NIST CSF - Recover] Implement backup and disaster recovery procedures. Test recovery regularly."

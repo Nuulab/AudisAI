@@ -1,0 +1,35 @@
+name: "California Bolstering Online Transparency (SB 243)"
+id: "CA-SB243-2026"
+description: "Requires clear disclosure when users interact with AI systems (Effective Jan 2026)"
+rules:
+  # 1. Clear Disclosure Check
+  - id: "CA-DISC-01"
+    severity: "HIGH"
+    description: "Verifies disclosure of AI identity to users."
+    scanner_type: "regex"
+    patterns:
+      - "I am an AI"
+      - "automated system"
+      - "artificial intelligence"
+      - "I am a bot"
+    remediation: "California SB 243 requires that users be informed they are interacting with an AI. Ensure this disclosure is clear and conspicuous."
+
+  # 2. Deceptive Human Simulation
+  - id: "CA-DECEP-01"
+    severity: "CRITICAL"
+    description: "Detects logic that tries to simulate human behavior deceptively."
+    scanner_type: "context_aware"
+    anchors: ["human_delay", "typing_indicator", "simulate_typing", "persona_human"]
+    exceptions: ["game", "npc"]
+    reinforcers: ["realistic", "fake", "pretend", "mimic"]
+    remediation: "Misleading users about an AI's synthetic nature is prohibited under SB 243. Remove deceptive typing indicators or human-mimicking delays intended to deceive."
+
+  # 3. Minor Interaction Safety
+  - id: "CA-KIDS-01"
+    severity: "CRITICAL"
+    description: "Detects interaction logic targeting minors."
+    scanner_type: "context_aware"
+    anchors: ["minor", "child", "under_18", "kids_mode", "age_gate"]
+    exceptions: ["parental_control"]
+    reinforcers: ["chat", "interact", "friend", "companion"]
+    remediation: "SB 243 has stricter disclosure requirements for AI interacting with minors. Ensure disclosures are age-appropriate."

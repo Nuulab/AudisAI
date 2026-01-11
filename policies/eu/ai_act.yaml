@@ -1,0 +1,55 @@
+name: "EU AI Act (Regulation 2024/1689)"
+id: "EU-AIACT-2024"
+description: "Comprehensive risk-based regulation for AI systems in the European Union"
+rules:
+  # 1. Prohibited Practice: Social Scoring
+  - id: "EU-BAN-01"
+    severity: "CRITICAL"
+    description: "Detects calculation of social scores (Prohibited Practice)."
+    scanner_type: "context_aware"
+    anchors: ["social_score", "good_citizen_score", "trustworthiness_score", "social_credit"]
+    exceptions: ["game_score", "reputation_game", "fictional"]
+    reinforcers: ["behavior", "conduct", "personality", "calculate", "assess"]
+    remediation: "Social scoring by public authorities or for detrimental treatment is BANNED under the EU AI Act (Art. 5). Remove this logic immediately."
+
+  # 2. Prohibited Practice: Subliminal Manipulation
+  - id: "EU-BAN-02"
+    severity: "CRITICAL"
+    description: "Detects techniques for subliminal manipulation."
+    scanner_type: "context_aware"
+    anchors: ["subliminal", "covert_influence", "hidden_stimuli", "manipulate_behavior"]
+    exceptions: ["research_study"]
+    reinforcers: ["unconscious", "bypass", "control"]
+    remediation: "AI systems using subliminal techniques to distort behavior are BANNED under the EU AI Act (Art. 5)."
+
+  # 3. High-Risk: Biometric Identification
+  - id: "EU-HIGH-01"
+    severity: "HIGH"
+    description: "Detects real-time remote biometric identification systems."
+    scanner_type: "context_aware"
+    anchors: ["face_recognition", "identify_person", "match_face", "biometric_id"]
+    exceptions: ["auth_login", "device_unlock"]
+    reinforcers: ["real_time", "live_feed", "surveillance", "public_space"]
+    remediation: "Real-time remote biometric identification in public spaces is heavily restricted and High-Risk. Requires strict conformity assessment and CE marking."
+
+  # 4. Transparency for Chatbots (Art. 50)
+  - id: "EU-TRANS-01"
+    severity: "HIGH"
+    description: "Verifies Limited Risk systems (chatbots) inform users."
+    scanner_type: "regex"
+    patterns:
+      - "I am an AI"
+      - "automated system"
+      - "AI chatbot"
+    remediation: "Under the EU AI Act (Art. 50), chatbots must inform users they are interacting with an AI. Ensure clear disclosure."
+
+  # 5. Technical Documentation (Annex IV)
+  - id: "EU-DOCS-01"
+    severity: "MEDIUM"
+    description: "Checks for required technical documentation."
+    scanner_type: "file_existence"
+    patterns:
+      - "TECHNICAL_DOCUMENTATION.md"
+      - "EU_DECLARATION_OF_CONFORMITY.pdf"
+      - "AI_SYSTEM_DESC.md"
+    remediation: "High-Risk AI systems require extensive technical documentation (Annex IV). Create TECHNICAL_DOCUMENTATION.md."
