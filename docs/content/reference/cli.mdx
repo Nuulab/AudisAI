@@ -1,0 +1,73 @@
+---
+title: CLI Reference
+description: Comprehensive reference for the AudisAI command-line interface.
+---
+
+# CLI Reference
+
+## `audisai`
+
+Running the command without arguments launches the interactive wizard.
+
+## `scan`
+
+Scans a directory or repository.
+
+```bash
+audisai scan [flags]
+```
+
+### Flags
+
+| Flag | Shorthand | Description | Default |
+| :--- | :--- | :--- | :--- |
+| `--path` | `-p` | Path to the directory to scan. | `.` |
+| `--state` | `-s` | Comma-separated list of policy codes (e.g., `tx,eu`) or `all`. | `all` |
+| `--repo` | `-r` | URL of a remote git repository to clone and scan. | |
+| `--format` | `-f` | Output format: `markdown`, `json`, `sarif`, `pdf`. | `markdown` |
+| `--output` | `-o` | Output filename. | |
+| `--output-dir` | `-d` | Directory to save report artifacts. | |
+| `--min-severity` | | Minimum severity to report: `low`, `medium`, `high`, `critical`. | `low` |
+| `--fail-on-violation` | | Exit with code 1 if violations are found. | `false` |
+| `--baseline` | `-b` | Path to a previous scan result (JSON) to compare against. | |
+
+## `watch`
+
+Starts a file watcher that re-scans on change.
+
+```bash
+audisai watch [flags]
+```
+
+## `init`
+
+Creates default configuration files (`audisai.yaml` and `.audisaiignore`).
+
+```bash
+audisai init
+```
+
+## `update-db`
+
+Updates the local database of policy definitions and word lists.
+
+```bash
+audisai update-db
+```
+
+## `auth`
+
+Configures authentication for remote repositories.
+
+```bash
+audisai auth github
+audisai auth gitlab
+```
+
+## `version`
+
+Displays version information.
+
+```bash
+audisai version
+```

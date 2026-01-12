@@ -1,0 +1,50 @@
+---
+title: Configuration
+description: Configuring AudisAI with config files and ignore rules.
+---
+
+# Configuration
+
+AudisAI can be configured via command-line arguments, a configuration file (`audisai.yaml`), or the interactive wizard.
+
+## audisai.yaml
+
+You can place a `audisai.yaml` file in the root of your project to persist your configuration.
+
+```yaml
+# Supported policies to check against (comma-separated codes)
+states: tx,co,nist-ai,eu
+
+# Default output format (markdown, json, sarif, pdf)
+format: markdown
+
+# Minimum severity to report (low, medium, high, critical)
+min_severity: medium
+
+# Whether to exit with code 1 on violations
+fail_on_violation: true
+```
+
+## .audisaiignore
+
+Similar to `.gitignore`, you can use `.audisaiignore` to exclude files or directories from scanning. You can also ignore specific rules for specific files.
+
+```bash
+# Ignore directories
+vendor/
+node_modules/
+tests/
+
+# Ignore specific rule in a specific file
+# Format: <Rule-ID>: <File-Path>
+TX-001: legacy_module.py
+EU-005: experimental/feature.ts
+```
+
+## Initialization
+
+You can generate these configuration files automatically:
+
+```bash
+audisai init
+```

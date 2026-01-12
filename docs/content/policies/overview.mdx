@@ -1,0 +1,25 @@
+---
+title: Overview
+description: Understanding how policies work in AudisAI.
+---
+
+# Policy Policies
+
+AudisAI uses "Policies" to define the rulesets for compliance checks. A policy typically corresponds to a specific law (e.g., Texas HB 149) or an industry framework (e.g., NIST AI RMF).
+
+## How Policies Work
+
+Each policy is defined in a YAML file that contains:
+1.  **Metadata**: Name, jurisdiction, description.
+2.  **Rules**: Specific patterns to look for in the code.
+3.  **Remediation**: Advice on how to fix the violation.
+
+## Selecting Policies
+
+You can select which policies to apply using the `--state` (or `-s`) flag.
+
+-   `--state all`: Run all checks.
+-   `--state eu`: Run only EU AI Act checks.
+-   `--state tx,co,ca`: Run checks for specific US states.
+
+See [Supported Frameworks](./supported-frameworks) for a full list of available codes.

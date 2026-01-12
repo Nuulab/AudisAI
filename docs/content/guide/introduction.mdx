@@ -1,0 +1,34 @@
+---
+title: Introduction
+description: What is AudisAI and why was it created?
+---
+
+# Introduction
+
+AudisAI is an automated compliance and static analysis tool designed specifically for the AI era. It scans your codebase to identify potential violations of AI-related laws, regulations, and industry frameworks—all without sending your code to the cloud.
+
+## Why AudisAI?
+
+As AI regulation accelerates globally (EU AI Act, US State Laws, NIST frameworks), developers are facing a new challenge: **Code Compliance**. Just as we lint for syntax errors or scan for security vulnerabilities, we now need to scan for AI governance violations.
+
+However, most compliance tools are:
+1.  **Cloud-based**: Requiring you to upload sensitive IP.
+2.  **Legal-focused**: Designed for lawyers, not developers.
+3.  **Manual**: Spreadsheets and checklists instead of automated checks.
+
+AudisAI solves this by bringing compliance checks **locally** to your terminal and CI/CD pipeline.
+
+## Core Philosophy
+
+-   **Privacy First**: No AI or LLM is used to scan your code. It uses deterministic pattern matching. Your code never leaves your machine.
+-   **Developer Centric**: Runs as a CLI, integrates with Git, and outputs SARIF for easy IDE integration.
+-   **Comprehensive**: Out-of-the-box support for major global regulations.
+
+## What it Detects
+
+AudisAI looks for patterns in your code, comments, and configuration files that indicate:
+-   Unbalanced training datasets.
+-   Lack of human oversight in automated decision loops.
+-   Missing transparency disclosures.
+-   Prohibited AI practices (e.g., biometric categorization).
+-   Usage of high-risk libraries without corresponding safeguards.

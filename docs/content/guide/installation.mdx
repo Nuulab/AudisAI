@@ -1,0 +1,40 @@
+---
+title: Installation
+description: How to install AudisAI on your machine.
+---
+
+# Installation
+
+AudisAI is written in Go and can be installed as a standalone binary or built from source.
+
+## Pre-compiled Binaries
+
+(Coming Soon) - Official releases will be available for macOS, Linux, and Windows.
+
+## Install via Go
+
+If you have Go installed (1.21+), you can install AudisAI directly:
+
+```bash
+go install github.com/nuulab/audisai@latest
+```
+
+Ensure your `GOPATH` bin directory is in your system `PATH`.
+
+## Build from Source
+
+You can clone the repository and build the binary manually:
+
+```bash
+git clone https://github.com/nuulab/audisai.git
+cd audisai
+go build -o audisai main.go
+```
+
+## Verify Installation
+
+Check that the installation was successful by checking the version:
+
+```bash
+audisai version
+```

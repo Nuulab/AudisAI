@@ -1,0 +1,49 @@
+---
+title: Quick Start
+description: Run your first scan in minutes.
+---
+
+# Quick Start
+
+Once installed, you can start using AudisAI immediately.
+
+## The Interactive Wizard
+
+For first-time users, the interactive wizard is the easiest way to get started. It will guide you through selecting policies and configuring the scan.
+
+```bash
+audisai
+```
+
+## Running a Scan
+
+To run a scan directly from the CLI:
+
+```bash
+audisai scan --path ./src --state all
+```
+
+This will:
+1.  Scan the `./src` directory.
+2.  Check against **all** available policies.
+3.  Output the results to the terminal.
+
+## Continuous Monitoring
+
+You can run AudisAI in "watch mode" to automatically rescan files as you modify them:
+
+```bash
+audisai watch --path .
+```
+
+## CI/CD Integration
+
+To fail a build pipeline if critical violations are found:
+
+```bash
+audisai scan \
+  --path . \
+  --state eu,nist-ai \
+  --fail-on-violation \
+  --min-severity high
+```
