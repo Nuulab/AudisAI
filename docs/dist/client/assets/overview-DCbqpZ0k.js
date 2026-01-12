@@ -1,0 +1,17 @@
+import{j as e}from"./main-B-RYiLb6.js";let s={title:"Overview",description:"Understanding how policies work in AudisAI."},t={contents:[{heading:"policy-policies",content:'AudisAI uses "Policies" to define the rulesets for compliance checks. A policy typically corresponds to a specific law (e.g., Texas HB 149) or an industry framework (e.g., NIST AI RMF).'},{heading:"how-policies-work",content:"Each policy is defined in a YAML file that contains:"},{heading:"how-policies-work",content:"Metadata: Name, jurisdiction, description."},{heading:"how-policies-work",content:"Rules: Specific patterns to look for in the code."},{heading:"how-policies-work",content:"Remediation: Advice on how to fix the violation."},{heading:"selecting-policies",content:"You can select which policies to apply using the --state (or -s) flag."},{heading:"selecting-policies",content:"--state all: Run all checks."},{heading:"selecting-policies",content:"--state eu: Run only EU AI Act checks."},{heading:"selecting-policies",content:"--state tx,co,ca: Run checks for specific US states."},{heading:"selecting-policies",content:"See Supported Frameworks for a full list of available codes."}],headings:[{id:"policy-policies",content:"Policy Policies"},{id:"how-policies-work",content:"How Policies Work"},{id:"selecting-policies",content:"Selecting Policies"}]};const l=[{depth:1,url:"#policy-policies",title:e.jsx(e.Fragment,{children:"Policy Policies"})},{depth:2,url:"#how-policies-work",title:e.jsx(e.Fragment,{children:"How Policies Work"})},{depth:2,url:"#selecting-policies",title:e.jsx(e.Fragment,{children:"Selecting Policies"})}];function c(o){const i={a:"a",code:"code",h1:"h1",h2:"h2",li:"li",ol:"ol",p:"p",strong:"strong",ul:"ul",...o.components};return e.jsxs(e.Fragment,{children:[e.jsx(i.h1,{id:"policy-policies",children:"Policy Policies"}),`
+`,e.jsx(i.p,{children:'AudisAI uses "Policies" to define the rulesets for compliance checks. A policy typically corresponds to a specific law (e.g., Texas HB 149) or an industry framework (e.g., NIST AI RMF).'}),`
+`,e.jsx(i.h2,{id:"how-policies-work",children:"How Policies Work"}),`
+`,e.jsx(i.p,{children:"Each policy is defined in a YAML file that contains:"}),`
+`,e.jsxs(i.ol,{children:[`
+`,e.jsxs(i.li,{children:[e.jsx(i.strong,{children:"Metadata"}),": Name, jurisdiction, description."]}),`
+`,e.jsxs(i.li,{children:[e.jsx(i.strong,{children:"Rules"}),": Specific patterns to look for in the code."]}),`
+`,e.jsxs(i.li,{children:[e.jsx(i.strong,{children:"Remediation"}),": Advice on how to fix the violation."]}),`
+`]}),`
+`,e.jsx(i.h2,{id:"selecting-policies",children:"Selecting Policies"}),`
+`,e.jsxs(i.p,{children:["You can select which policies to apply using the ",e.jsx(i.code,{children:"--state"})," (or ",e.jsx(i.code,{children:"-s"}),") flag."]}),`
+`,e.jsxs(i.ul,{children:[`
+`,e.jsxs(i.li,{children:[e.jsx(i.code,{children:"--state all"}),": Run all checks."]}),`
+`,e.jsxs(i.li,{children:[e.jsx(i.code,{children:"--state eu"}),": Run only EU AI Act checks."]}),`
+`,e.jsxs(i.li,{children:[e.jsx(i.code,{children:"--state tx,co,ca"}),": Run checks for specific US states."]}),`
+`]}),`
+`,e.jsxs(i.p,{children:["See ",e.jsx(i.a,{href:"./supported-frameworks",children:"Supported Frameworks"})," for a full list of available codes."]})]})}function r(o={}){const{wrapper:i}=o.components||{};return i?e.jsx(i,{...o,children:e.jsx(c,{...o})}):c(o)}export{r as default,s as frontmatter,t as structuredData,l as toc};

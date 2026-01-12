@@ -1,0 +1,4 @@
+const tsrStartManifest = () => ({ "routes": { "__root__": { "filePath": "/Users/glennlaysonjr/Sites/Pocket Ninja/AudisAI/docs/src/routes/__root.tsx", "children": ["/", "/api/search", "/docs/$"], "preloads": ["/assets/main-B-RYiLb6.js"], "assets": [] }, "/": { "filePath": "/Users/glennlaysonjr/Sites/Pocket Ninja/AudisAI/docs/src/routes/index.tsx", "assets": [], "preloads": ["/assets/index-B5hAJld1.js", "/assets/layout.shared-D-w3JjVC.js"] }, "/api/search": { "filePath": "/Users/glennlaysonjr/Sites/Pocket Ninja/AudisAI/docs/src/routes/api/search.ts" }, "/docs/$": { "filePath": "/Users/glennlaysonjr/Sites/Pocket Ninja/AudisAI/docs/src/routes/docs/$.tsx", "assets": [], "preloads": ["/assets/_-DfT5TWEA.js", "/assets/layout.shared-D-w3JjVC.js"] } }, "clientEntry": "/assets/main-B-RYiLb6.js" });
+export {
+  tsrStartManifest
+};
