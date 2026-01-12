@@ -55,29 +55,37 @@ func ParseRepoURL(url string) (*RepoInfo, error) {
 }
 
 // CloneRepo clones a repository to a temporary directory
-func CloneRepo(repoURL string) (string, func(), error) {
+// If token is provided, it overrides the stored token
+func CloneRepo(repoURL, token string) (string, func(), error) {
 	info, err := ParseRepoURL(repoURL)
 	if err != nil {
 		return "", nil, err
 	}
 
-	// Get the appropriate token
 	var cloneURL string
-	var token string
+	var authToken string
 
 	switch info.Provider {
 	case "github":
-		token, err = auth.GetGitHubToken()
-		if err != nil {
-			return "", nil, err
+		if token != "" {
+			authToken = token
+		} else {
+			authToken, err = auth.GetGitHubToken()
+			if err != nil {
+				return "", nil, err
+			}
 		}
 		cloneURL = fmt.Sprintf("https://github.com/%s/%s.git", info.Owner, info.Repo)
 
 	case "gitlab":
 		var baseURL string
-		token, baseURL, err = auth.GetGitLabToken()
-		if err != nil {
-			return "", nil, err
+		if token != "" {
+			authToken = token
+		} else {
+			authToken, baseURL, err = auth.GetGitLabToken()
+			if err != nil {
+				return "", nil, err
+			}
 		}
 		host := info.Host
 		if baseURL != "" {
@@ -105,7 +113,7 @@ func CloneRepo(repoURL string) (string, func(), error) {
 		URL: cloneURL,
 		Auth: &http.BasicAuth{
 			Username: "x-access-token", // Can be anything for token auth
-			Password: token,
+			Password: authToken,
 		},
 		Depth:    1, // Shallow clone for speed
 		Progress: os.Stdout,

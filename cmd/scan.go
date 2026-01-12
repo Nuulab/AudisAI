@@ -25,6 +25,7 @@ var (
 	failOnViolation bool
 	minSeverity     string
 	baselineFile    string
+	scanToken       string
 )
 
 var scanCmd = &cobra.Command{
@@ -60,6 +61,7 @@ func init() {
 	scanCmd.Flags().BoolVarP(&failOnViolation, "fail-on-violation", "", false, "Exit with code 1 if violations are found")
 	scanCmd.Flags().StringVarP(&minSeverity, "min-severity", "", "low", "Minimum severity to report: low, medium, high, critical")
 	scanCmd.Flags().StringVarP(&baselineFile, "baseline", "b", "", "Baseline file to compare against (only report new violations)")
+	scanCmd.Flags().StringVar(&scanToken, "token", "", "OAuth token for cloning private repositories (overrides stored token)")
 }
 
 // parseStates splits a comma-separated string of state codes into a slice
@@ -209,7 +211,7 @@ func runScan(cmd *cobra.Command, args []string) error {
 	if repoURL != "" {
 		fmt.Printf("📦 Remote Repository: %s\n\n", repoURL)
 		var err error
-		scanPath, cleanup, err = remote.CloneRepo(repoURL)
+		scanPath, cleanup, err = remote.CloneRepo(repoURL, scanToken)
 		if err != nil {
 			return fmt.Errorf("failed to clone repository: %w", err)
 		}
